@@ -23,7 +23,7 @@ async function handleRequest(request) {
 
   if (response) return response
 
-  let response = await fetch(request)
+  response = await fetch(request)
 
   response = new Response(response.body, response)
 
