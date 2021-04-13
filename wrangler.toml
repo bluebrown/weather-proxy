@@ -1,0 +1,6 @@
+name = "weather-forecast"
+type = "javascript"
+account_id = "099791ae1cf176d947e3a13462d69cd3"
+workers_dev = true
+route = ""
+zone_id = ""
