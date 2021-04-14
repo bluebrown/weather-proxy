@@ -1,15 +1,64 @@
-# 👷 `worker-template` Hello World
+# Weather Proxy
 
-A template for kick starting a Cloudflare worker project.
+Cloudflare worker to add cors headers to requests to <https://www.metaweather.com/>
 
-[`index.js`](https://github.com/cloudflare/worker-template/blob/master/index.js) is the content of the Workers script.
+## Prerequisites
 
-#### Wrangler
+In order to run this worker you need a free cloudflare account and an access token to manage workers.
 
-To generate using [wrangler](https://github.com/cloudflare/wrangler)
+## Setup
 
+Update the account id in the *wrangler.toml* to your own account id that you can find in cloudflare in the worker tab.
+
+```toml
+name = "weather-proxy"
+type = "javascript"
+account_id = "your account id"
+workers_dev = true
+route = ""
+zone_id = ""
 ```
-wrangler generate projectname https://github.com/cloudflare/worker-template
+
+If you are planning to deploy this, and make requests to it, you need to change the variable `ALLOWED_ORIGIN` in the *index.js*
+
+```javascript
+const ALLOWED_ORIGIN = "your origin or maybe *"
 ```
 
-Further documentation for Wrangler can be found [here](https://developers.cloudflare.com/workers/tooling/wrangler).
+## Development
+
+For local development and deployment to cloudflare use the [wrangler cli](https://developers.cloudflare.com/workers/cli-wrangler)
+
+```console
+wrangler dev
+```
+
+## Deployment
+
+The project can be deployed directly with wrangler.
+
+```console
+wrangler publish
+```
+
+However, there is a workflow in the .github folder that will deploy automatically on release, assuming everything is correctly configured. Meaning the account id is correct and the access token has been added to the github repositories secrets under the name `CF_API_TOKEN`.
+
+```yml
+name: Deploy
+
+on:
+  release:
+    types:
+      - created
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy
+    steps:
+      - uses: actions/checkout@v2
+      - name: Publish
+        uses: cloudflare/wrangler-action@1.3.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+```
