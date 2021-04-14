@@ -7,7 +7,7 @@ const corsHeaders = {
 const wHost = "https://www.metaweather.com"
 
 const PROXY_ENDPOINT = "/"
-const ALLOWED_ORIGIN = "https://weather.rainbowstack.dev/"
+const ALLOWED_ORIGIN = "https://weather.rainbowstack.dev"
 
 async function handleRequest(request) {
   const url = new URL(request.url)
