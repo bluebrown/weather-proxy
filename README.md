@@ -41,24 +41,14 @@ The project can be deployed directly with wrangler.
 wrangler publish
 ```
 
-However, there is a workflow in the .github folder that will deploy automatically on release, assuming everything is correctly configured. Meaning the account id is correct and the access token has been added to the github repositories secrets under the name `CF_API_TOKEN`.
+However, there is a workflow in the .github folder that will deploy automatically on release, assuming everything is correctly configured. Meaning if the account id is correct and the access token has been added to the github repositories secrets under the name `CF_API_TOKEN`.
 
 ```yml
 name: Deploy
-
-on:
-  release:
-    types:
-      - created
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    name: Deploy
-    steps:
-      - uses: actions/checkout@v2
-      - name: Publish
-        uses: cloudflare/wrangler-action@1.3.0
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
+steps:
+  - uses: actions/checkout@v2
+  - name: Publish
+    uses: cloudflare/wrangler-action@1.3.0
+    with:
+      apiToken: ${{ secrets.CF_API_TOKEN }}
 ```
