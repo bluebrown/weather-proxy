@@ -7,11 +7,12 @@ const corsHeaders = {
 const wHost = "https://www.metaweather.com"
 
 const PROXY_ENDPOINT = "/"
+const ALLOWED_ORIGIN = "https://weather.rainbowstack.dev/"
 
 async function handleRequest(request) {
   const url = new URL(request.url)
   let apiUrl = wHost + url.pathname + url.search
-  
+
   request = new Request(apiUrl, request)
   request.headers.set("Origin", new URL(apiUrl).origin)
 
@@ -27,7 +28,7 @@ async function handleRequest(request) {
 
   response = new Response(response.body, response)
 
-  response.headers.set("Access-Control-Allow-Origin", '*')
+  response.headers.set("Access-Control-Allow-Origin", ALLOWED_ORIGIN)
 
   response.headers.append("Vary", "Origin")
 
